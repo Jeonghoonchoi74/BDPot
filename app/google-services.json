@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "588250457583",
+    "project_id": "baedalpot-d3fc6",
+    "storage_bucket": "baedalpot-d3fc6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588250457583:android:f50ad92f3fd33fe32ec21a",
+        "android_client_info": {
+          "package_name": "com.example.baedalpot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588250457583-l34qnt6ec9nv777tish2sj240115kjr6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLqVdEPZ57n0UgaRFinB7rOcT-_kP48ek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "588250457583-l34qnt6ec9nv777tish2sj240115kjr6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

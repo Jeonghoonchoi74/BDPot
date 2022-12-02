@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Category">
+        <item>메뉴</item>
+        <item>한식</item>
+        <item>일식</item>
+        <item>양식</item>
+        <item>중식</item>
+        <item>아시안</item>
+        <item>분식</item>
+        <item>프렌차이즈</item>
+        <item></item>
+
+    </string-array>
+
+</resources>

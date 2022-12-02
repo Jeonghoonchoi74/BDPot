@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAF4C0"
+    tools:context=".ui.home.child.MypageFragment">
+    <!-- TODO: Update blank fragment layout -->
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="300dp"
+        android:layout_height="120dp"
+        android:src="@drawable/baedalpot_icon"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="55dp"
+        tools:layout_editor_absoluteY="145dp" />
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="94dp"
+        android:layout_height="27dp"
+        android:textColor="#FF9800"
+        android:text="김철중"
+        android:textSize="20dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="314dp" />
+
+    <TextView
+        android:id="@+id/account_number"
+        android:layout_width="146dp"
+        android:layout_height="27dp"
+        android:textColor="#FF9800"
+        android:text="333179700049"
+        android:textSize="20dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="390dp" />
+
+    <TextView
+        android:id="@+id/user_email"
+        android:layout_width="250dp"
+        android:layout_height="27dp"
+        android:textColor="#FF9800"
+        android:text="cj_kim@mju.ac.kr"
+        android:textSize="20dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="352dp" />
+
+    <TextView
+        android:id="@+id/delivery_detail"
+        android:layout_width="66dp"
+        android:layout_height="27dp"
+        android:textColor="#FF9800"
+        android:text="신고스택"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="428dp" />
+
+    <Button
+        android:id="@+id/report_stack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFC107"
+        android:backgroundTint="#FFC107"
+        android:text="배달내역"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="479dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
