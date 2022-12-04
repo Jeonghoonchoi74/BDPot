@@ -2,6 +2,7 @@ package com.example.baedalpot.adapter;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -11,8 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baedalpot.databinding.ItemGroupBinding;
 import com.example.baedalpot.model.Group;
+import com.example.baedalpot.model.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class GroupAdapter extends ListAdapter<Group, GroupAdapter.GroupViewHolder> {
+    private final FirebaseAuth auth = FirebaseAuth.getInstance();
+    private final DatabaseReference db = FirebaseDatabase.getInstance().getReference();
     public GroupAdapter() {
         super(new DiffUtil.ItemCallback<Group>() {
             @Override
@@ -64,6 +75,7 @@ public class GroupAdapter extends ListAdapter<Group, GroupAdapter.GroupViewHolde
         public GroupViewHolder(ItemGroupBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+
         }
     }
 }

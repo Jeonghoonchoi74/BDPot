@@ -2,6 +2,7 @@ package com.example.baedalpot.model;
 
 import com.google.firebase.database.Exclude;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,15 +11,18 @@ public class User {
     public String accNum;
     public String email;
     public String password;
-
+    public String username;
+    public String group;
     public User() {
     }
+
 
     public User(String id, String email, String password, String accNum) {
         this.id = id;
         this.accNum = accNum;
         this.password = password;
         this.email = email;
+        this.group = null;
     }
 
     @Exclude
@@ -63,4 +67,15 @@ public class User {
         this.accNum = accNum;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getGroup() {return group;}
+
+    public void setGroup(String group) {this.group = group;}
 }

@@ -14,8 +14,10 @@ import com.example.baedalpot.adapter.GroupAdapter;
 import com.example.baedalpot.databinding.FragmentGroupBinding;
 import com.example.baedalpot.model.Group;
 import com.example.baedalpot.ui.writepost.WritePostActivity;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -36,14 +38,16 @@ public class GroupFragment extends Fragment implements ValueEventListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         binding.recyclerView.setAdapter(adapter);
-        binding.writeButton.setOnClickListener(v ->
-                startActivity(new Intent(requireContext(), WritePostActivity.class)));
+        binding.writeButton.setOnClickListener(v ->{
+                Intent intent = new Intent(requireContext(), WritePostActivity.class);
+                startActivity(intent);
+        });
 
         db.getReference().child("Group")
                 .orderByChild("timestampComplement")
                 .addValueEventListener(this);
+
     }
 
     @Override

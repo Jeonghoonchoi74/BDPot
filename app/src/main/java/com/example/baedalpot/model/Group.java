@@ -3,12 +3,12 @@ package com.example.baedalpot.model;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 @IgnoreExtraProperties
 public class Group {
     @Exclude
-    public String key;
 
     // 작성자 UID
     public String writer;
@@ -20,11 +20,29 @@ public class Group {
     public String destination;
     public long timestamp;
     public long timestampComplement;
+    public String key;
+    public ArrayList<String> userlist;
 
     public Group() {
     }
 
-    public Group(String writer, String title, String restaurant, String category, int maxPrice, int maxPerson, String destination) {
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public ArrayList<String> getUserlist() {
+        return userlist;
+    }
+
+    public void setUserlist(ArrayList<String> userlist) {
+        this.userlist = userlist;
+    }
+
+    public Group(String writer, String title, String restaurant, String category, int maxPrice, int maxPerson, String destination, String key, ArrayList<String> userlist) {
         this.writer = writer;
         this.title = title;
         this.restaurant = restaurant;
@@ -34,5 +52,7 @@ public class Group {
         this.destination = destination;
         this.timestamp = new Date().getTime();
         this.timestampComplement = timestamp * -1;
+        this.userlist = userlist;
+        this.key = key;
     }
 }

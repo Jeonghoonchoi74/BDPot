@@ -45,13 +45,13 @@ public class NaviActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             switch (menuItem.getItemId()) {
-                case R.id.tab_serch: {
+                case R.id.tab_group: {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.home_ly, new SerchFragment())
                             .commit();
                     return true;
                 }
-                case R.id.tab_group: {
+                case R.id.tab_serch: {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.home_ly, new GroupFragment())
                             .commit();

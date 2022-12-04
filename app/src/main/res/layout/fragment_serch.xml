@@ -8,16 +8,73 @@
 
     <!-- TODO: Update blank fragment layout -->
     <ImageView
-        android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/FCrecycler_view"
         android:layout_width="match_parent"
-        android:layout_height="509dp">
+        android:layout_height="96dp"
+        android:src="@drawable/baedalpot_icon" />
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="left"
+        android:text="제목"
+        android:textColor="?attr/colorPrimary" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+        <TextView
+            android:id="@+id/tv_restaurant"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="left"
+            android:text="식당"
+            android:textColor="?attr/colorPrimary" />
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:id="@+id/tv_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="right"
+            android:text="진행 시간"
+            android:textColor="?attr/colorPrimary" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+        <TextView
+            android:id="@+id/tv_cash"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="left"
+            android:text="가용금액"
+            android:textColor="?attr/colorPrimary" />
+
+        <TextView
+            android:id="@+id/tv_member"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="right"
+            android:text="참여인원"
+            android:textColor="?attr/colorPrimary" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/Chatrecycler_view"
+            android:layout_width="300dp"
+            android:layout_height="509dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
 </LinearLayout>

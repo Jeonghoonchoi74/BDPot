@@ -1,21 +1,33 @@
 package com.example.baedalpot.ui.writepost;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+
+import androidx.annotation.NonNull;
 
 import com.example.baedalpot.BaseActivity;
 import com.example.baedalpot.R;
 import com.example.baedalpot.databinding.ActivityWritePostBinding;
 import com.example.baedalpot.model.Group;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class WritePostActivity extends BaseActivity {
     private ActivityWritePostBinding binding;
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
-    private final FirebaseDatabase db = FirebaseDatabase.getInstance();
-
+    private final DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+    private Integer g_count;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +42,7 @@ public class WritePostActivity extends BaseActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, R.layout.item_dropdown, getResources().getStringArray(R.array.Category));
-        ((AutoCompleteTextView) binding.categoryTextField.getEditText()).setAdapter(adapter);
+        //((AutoCompleteTextView) binding.categoryTextField.getEditText()).setAdapter(adapter);
 
         binding.submitButton.setOnClickListener(v -> submit());
     }
@@ -55,10 +67,10 @@ public class WritePostActivity extends BaseActivity {
             return;
         }
 
-        if (category.isEmpty()) {
+        /*if (category.isEmpty()) {
             showToastMessage("카테고리를 선택해 주세요.");
             return;
-        }
+        }*/
 
         if (maxPrice.isEmpty()) {
             showToastMessage("최대 금액을 입력해 주세요.");
@@ -77,21 +89,46 @@ public class WritePostActivity extends BaseActivity {
 
         showProgressDialog("등록중 ... 잠시만 기다려 주세요.");
 
-        Group group = new Group(
-                auth.getUid(),
-                title,
-                restaurant,
-                category,
-                Integer.parseInt(maxPrice),
-                Integer.parseInt(maxPerson),
-                destination);
 
-        db.getReference().child("Group")
-                .push()
-                .setValue(group);
+        db.child("GroupCount").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                Log.e("firebase", "in", task.getException());
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                    g_count = task.getResult().getValue(Integer.class);
+                    if(g_count == null){
+                        g_count = 0;
+                    }
+                    String count = g_count.toString();
+                    ArrayList<String> userlist = new ArrayList<>();
+                    userlist.add(auth.getUid());
+                    Group group = new Group(
+                            auth.getUid(),
+                            title,
+                            restaurant,
+                            "미정",
+                            Integer.parseInt(maxPrice),
+                            Integer.parseInt(maxPerson),
+                            destination,
+                            count,
+                            userlist);
 
-        dismissProgressDialog();
-        showToastMessage("등록되었습니다.");
+                    db.child("Group")
+                            .child("Group_"+count)
+                            .setValue(group);
+                    g_count += 1;
+                    db.child("GroupCount").setValue(g_count);
+                    dismissProgressDialog();
+                    showToastMessage("등록되었습니다.");
+                }
+            }
+        });
+
+
         finish();
     }
 }
