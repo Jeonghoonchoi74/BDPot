@@ -10,6 +10,7 @@ public class User {
     public String accNum;
     public String email;
     public String password;
+    public int numReport;
 
     public User() {
     }
@@ -19,6 +20,7 @@ public class User {
         this.accNum = accNum;
         this.password = password;
         this.email = email;
+        this.numReport = 0;
     }
 
     @Exclude
@@ -62,5 +64,10 @@ public class User {
     public void setAccNum(String accNum) {
         this.accNum = accNum;
     }
+
+    public int getNumReport(){return numReport;}
+
+    public void setNumReport(int numReport){this.numReport = numReport;}
+
 
 }

@@ -26,6 +26,7 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 */
+
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
