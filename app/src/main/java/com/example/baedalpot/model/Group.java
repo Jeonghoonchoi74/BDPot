@@ -23,6 +23,54 @@ public class Group {
     public String key;
     public ArrayList<String> userlist;
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(String restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public int getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(int maxPrice) {
+        this.maxPrice = maxPrice;
+    }
+
+    public int getMaxPerson() {
+        return maxPerson;
+    }
+
+    public void setMaxPerson(int maxPerson) {
+        this.maxPerson = maxPerson;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
     public Group() {
     }
 
