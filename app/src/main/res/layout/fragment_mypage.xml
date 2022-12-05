@@ -8,6 +8,17 @@
     tools:context=".ui.home.child.MypageFragment">
     <!-- TODO: Update blank fragment layout -->
 
+    <Button
+        android:id="@+id/delivery_detail2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFC107"
+        android:backgroundTint="#FFC107"
+        android:text="배달내역"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="504dp" />
+
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="300dp"
@@ -51,7 +62,7 @@
         tools:layout_editor_absoluteY="352dp" />
 
     <TextView
-        android:id="@+id/delivery_detail"
+        android:id="@+id/report_stack"
         android:layout_width="66dp"
         android:layout_height="27dp"
         android:textColor="#FF9800"
@@ -61,13 +72,14 @@
         tools:layout_editor_absoluteY="428dp" />
 
     <Button
-        android:id="@+id/report_stack"
+        android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#FFC107"
         android:backgroundTint="#FFC107"
-        android:text="배달내역"
+        android:text="로그아웃"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="479dp" />
+        tools:layout_editor_absoluteX="248dp"
+        tools:layout_editor_absoluteY="504dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
