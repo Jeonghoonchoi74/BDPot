@@ -1,5 +1,6 @@
 package com.example.baedalpot.ui.home.child;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,16 +8,21 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.baedalpot.R;
+import com.example.baedalpot.ui.auth.LoginActivity;
+import com.example.baedalpot.ui.home.NaviActivity;
+import com.example.baedalpot.ui.writepost.WritePostActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MypageFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MypageFragment extends Fragment {
-
+public class MypageFragment extends Fragment implements View.OnClickListener {
+    Button logout;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -60,7 +66,15 @@ public class MypageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mypage, container, false);
+        View myView = inflater.inflate(R.layout.fragment_mypage, container, false);
+        logout = (Button) myView.findViewById(R.id.btnLogout);
+        logout.setOnClickListener(this);
+        return myView;
+    }
+
+    @Override
+    public void onClick(View view) {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(requireContext(), LoginActivity.class));
     }
 }

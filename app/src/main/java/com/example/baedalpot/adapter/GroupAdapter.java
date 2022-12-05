@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.baedalpot.databinding.ItemGroupBinding;
 import com.example.baedalpot.model.Group;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -68,21 +71,45 @@ public class GroupAdapter extends ListAdapter<Group, GroupAdapter.GroupViewHolde
         binding.maxPersonTextView.setText("최대인원수: " + item.maxPerson);
         binding.destinationTextView.setText("배달목적지: " + item.destination);
 
+        if(!holder.itemView.isClickable()){
+            int p = position;
+            holder.itemView.setTag(p);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    CheckCanJoin(getCurrentList().get(p));
+                    /*if (CheckCanJoin(getCurrentList().get(p))){
+                        auth.getUid();
+                        ArrayList<String> array = getCurrentList().get(p).getUserlist();
+                        array.add(auth.getUid());
+                        db.child("Group").child("Group_"+getCurrentList().get(p).getKey()).child("userlist").setValue(array);
+                        db.child("UserAccount").child("Group").setValue("Group_"+getCurrentList().get(p).getKey());
+                    }*/
+                }
+            });
+        }
 
-        int p = position;
-        holder.itemView.setTag(p);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+
+    }
+
+    public void CheckCanJoin(Group g){
+        int a = g.getUserlist().size();
+        int b = g.getMaxPerson();
+        db.child("UserAccount").child(auth.getUid()).child("group").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
-            public void onClick(View view) {
-                auth.getUid();
-                ArrayList<String> array = getCurrentList().get(p).getUserlist();
-                array.add(auth.getUid());
-                db.child("Group").child("Group_"+getCurrentList().get(p).getKey()).child("userlist").setValue(array);
-                db.child("UserAccount").child("Group").setValue("Group_"+getCurrentList().get(p).getKey());
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.getResult().getValue() == null && a < b){
+                    auth.getUid();
+                    ArrayList<String> array = g.getUserlist();
+                    array.add(auth.getUid());
+                    db.child("Group").child("Group_"+g.getKey()).child("userlist").setValue(array);
+                    db.child("UserAccount").child(auth.getUid()).child("group").setValue("Group_"+g.getKey());
+                }
             }
         });
 
     }
+
 
     public static class GroupViewHolder extends RecyclerView.ViewHolder {
         ItemGroupBinding binding;

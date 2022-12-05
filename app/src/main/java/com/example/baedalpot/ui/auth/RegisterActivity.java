@@ -38,7 +38,7 @@ public class RegisterActivity extends BaseActivity {
         String id = binding.idTextField.getEditText().getText().toString().trim();
         String email = binding.emailTextField.getEditText().getText().toString().trim();
         String password = binding.passwordTextField.getEditText().getText().toString().trim();
-
+        //String match = "@ruu.kr"; 임시 로그인 도메인 ruu.kr로 임시 이메일 생성 가능
         if (accNum.isEmpty()) {
             Toast.makeText(this, "계좌번호를 입력해 주세요.", Toast.LENGTH_LONG).show();
             return;
@@ -69,35 +69,39 @@ public class RegisterActivity extends BaseActivity {
             return;
         }
 
-        showProgressDialog("회원가입 중 ... 잠시만 기다려 주세요.");
 
-        auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(RegisterActivity.this, task -> {
-                    if (task.getException() != null) {
-                        dismissProgressDialog();
+       // if(email.contains(match)){
+            showProgressDialog("회원가입 중 ... 잠시만 기다려 주세요.");
+            auth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(RegisterActivity.this, task -> {
+                        if (task.getException() != null) {
+                            dismissProgressDialog();
 
-                        Exception exception = task.getException();
+                            Exception exception = task.getException();
 
-                        if (exception instanceof FirebaseAuthUserCollisionException) {
-                            Toast.makeText(this, "이미 사용중인 이메일 주소 입니다. 다른 이메일 주소를 입력해 주세요.", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(this, "오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.", Toast.LENGTH_LONG).show();
+                            if (exception instanceof FirebaseAuthUserCollisionException) {
+                                Toast.makeText(this, "이미 사용중인 이메일 주소 입니다. 다른 이메일 주소를 입력해 주세요.", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(this, "오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.", Toast.LENGTH_LONG).show();
+                            }
+                            return;
                         }
 
-                        return;
-                    }
+                        AuthResult result = task.getResult();
+                        User user = new User(id, email, password, accNum);
 
-                    AuthResult result = task.getResult();
-                    User user = new User(id, email, password, accNum);
+                        db.getReference().child("UserAccount")
+                                .child(result.getUser().getUid())
+                                .setValue(user);
 
-                    db.getReference().child("UserAccount")
-                            .child(result.getUser().getUid())
-                            .setValue(user);
+                        dismissProgressDialog();
 
-                    dismissProgressDialog();
+                        startActivity(new Intent(this, LoginActivity.class));
+                        finishAffinity();
+                    });
+      /*  }else{
+            Toast.makeText(this, "이메일을 주소를 @mju.ac.kr로 끝나야 됩니다.", Toast.LENGTH_LONG).show();
+        }*/
 
-                    startActivity(new Intent(this, NaviActivity.class));
-                    finishAffinity();
-                });
     }
 }

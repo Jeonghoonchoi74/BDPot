@@ -13,6 +13,8 @@ public class User {
     public String password;
     public String username;
     public String group;
+    public int numReport;
+
     public User() {
     }
 
@@ -23,6 +25,7 @@ public class User {
         this.password = password;
         this.email = email;
         this.group = null;
+        this.numReport = 0;
     }
 
     @Exclude
@@ -78,4 +81,9 @@ public class User {
     public String getGroup() {return group;}
 
     public void setGroup(String group) {this.group = group;}
+    public int getNumReport(){return numReport;}
+
+    public void setNumReport(int numReport){this.numReport = numReport;}
+
+
 }

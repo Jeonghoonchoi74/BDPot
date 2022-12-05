@@ -11,6 +11,7 @@ import com.example.baedalpot.databinding.ActivityLoginBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends BaseActivity {
     private ActivityLoginBinding binding;
@@ -19,11 +20,12 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+/* 있으면 회원가입 하면 바로 기능 사용 가능 (1회성으로 이메일 인증없이 사용 가능 범죄 악용 우려 ↑)
         if (auth.getCurrentUser() != null) {
             startMainActivity(false);
             return;
         }
+*/
 
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -77,8 +79,18 @@ public class LoginActivity extends BaseActivity {
                         return;
                     }
 
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if (user.isEmailVerified()) {
+                        startMainActivity(true);
+
+                    } else {
+                        user.sendEmailVerification();
+                        Toast.makeText(LoginActivity.this, "이메일을 활성화를 시켜주십시오",
+                                Toast.LENGTH_SHORT).show();
+
+                    }
+
                     dismissProgressDialog();
-                    startMainActivity(true);
                 });
     }
 
