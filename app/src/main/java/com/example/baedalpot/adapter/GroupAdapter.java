@@ -1,17 +1,21 @@
 package com.example.baedalpot.adapter;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.baedalpot.databinding.ItemGroupBinding;
 import com.example.baedalpot.model.Group;
+import com.example.baedalpot.ui.home.child.SerchFragment;
+import com.example.baedalpot.ui.writepost.WritePostActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,8 +30,9 @@ public class GroupAdapter extends ListAdapter<Group, GroupAdapter.GroupViewHolde
 
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
     private final DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+    private Fragment myfargmant;
 
-    public GroupAdapter() {
+    public GroupAdapter(Fragment fragment) {
         super(new DiffUtil.ItemCallback<Group>() {
             @Override
             public boolean areItemsTheSame(@NonNull Group oldItem, @NonNull Group newItem) {
@@ -49,6 +54,8 @@ public class GroupAdapter extends ListAdapter<Group, GroupAdapter.GroupViewHolde
                 return new Object();
             }
         });
+
+        myfargmant = fragment;
     }
 
     @NonNull

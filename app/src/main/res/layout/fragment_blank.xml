@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAF4C0"
+    tools:context=".ui.home.child.BlankFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="358dp"
+        android:layout_height="124dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="145dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginBottom="49dp"
+        android:src="@drawable/baedalpot_icon"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="진행중인 그룹이 없습니다."
+        android:textSize="30dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="#FF9800"/>
+
+
+</FrameLayout>

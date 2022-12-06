@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class GroupFragment extends Fragment implements ValueEventListener {
     private final FirebaseDatabase db = FirebaseDatabase.getInstance();
     private FragmentGroupBinding binding;
-    private final GroupAdapter adapter = new GroupAdapter();
+    private final GroupAdapter adapter = new GroupAdapter(this);
 
     @Nullable
     @Override
