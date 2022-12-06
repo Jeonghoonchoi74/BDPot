@@ -89,7 +89,6 @@ public class LoginActivity extends BaseActivity {
                                 Toast.LENGTH_SHORT).show();
 
                     }
-
                     dismissProgressDialog();
                 });
     }
