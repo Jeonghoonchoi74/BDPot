@@ -85,13 +85,6 @@ public class GroupAdapter extends ListAdapter<Group, GroupAdapter.GroupViewHolde
                 @Override
                 public void onClick(View view) {
                     CheckCanJoin(getCurrentList().get(p));
-                    /*if (CheckCanJoin(getCurrentList().get(p))){
-                        auth.getUid();
-                        ArrayList<String> array = getCurrentList().get(p).getUserlist();
-                        array.add(auth.getUid());
-                        db.child("Group").child("Group_"+getCurrentList().get(p).getKey()).child("userlist").setValue(array);
-                        db.child("UserAccount").child("Group").setValue("Group_"+getCurrentList().get(p).getKey());
-                    }*/
                 }
             });
         }
