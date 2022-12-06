@@ -8,19 +8,116 @@
     tools:context=".ui.home.child.MypageFragment">
     <!-- TODO: Update blank fragment layout -->
 
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="254dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="318dp"
+        android:layout_marginBottom="11dp"
+        android:text="김철중"
+        android:textColor="#FF9800"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/user_email"
+        app:layout_constraintStart_toStartOf="@+id/user_email"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/user_email"
+        android:layout_width="250dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="355dp"
+        android:layout_marginBottom="11dp"
+        android:text="cj_kim@mju.ac.kr"
+        android:textColor="#FF9800"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/account_number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/report_stack"
+        android:layout_width="256dp"
+        android:layout_height="81dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="429dp"
+        android:layout_marginEnd="80dp"
+        android:text="신고스택"
+        android:textSize="20dp"
+
+        android:textColor="#FF9800"
+        app:layout_constraintBottom_toTopOf="@+id/delivery_detail2"
+        app:layout_constraintEnd_toEndOf="@+id/account_number"
+        app:layout_constraintHorizontal_bias="0.015"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/account_number"
+        android:layout_width="146dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="392dp"
+        android:layout_marginBottom="11dp"
+        android:text="333179700049"
+        android:textColor="#FF9800"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/report_stack"
+        app:layout_constraintStart_toStartOf="@+id/user_email"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints" />
+
+
+    <Button
+        android:id="@+id/delUser"
+        android:layout_width="108dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="5dp"
+        android:background="#FFC107"
+        android:backgroundTint="#FFC107"
+        android:text="회원탈퇴"
+        app:layout_constraintEnd_toStartOf="@+id/btnLogout"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/delivery_detail2"
+        tools:ignore="MissingConstraints" />
+
     <Button
         android:id="@+id/delivery_detail2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
-        android:layout_marginTop="49dp"
         android:layout_marginEnd="5dp"
+        android:layout_marginBottom="68dp"
         android:background="#FFC107"
         android:backgroundTint="#FFC107"
         android:text="배달내역"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnLogout"
+        app:layout_constraintHorizontal_bias="0.284"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/report_stack"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="68dp"
+        android:layout_marginBottom="68dp"
+        android:background="#FFC107"
+        android:backgroundTint="#FFC107"
+        android:text="로그아웃"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="MissingConstraints" />
 
     <ImageView
@@ -34,77 +131,10 @@
         android:src="@drawable/baedalpot_icon"
         app:layout_constraintBottom_toTopOf="@+id/user_name"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/user_name"
-        android:layout_width="94dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="11dp"
-        android:text="김철중"
-        android:textColor="#FF9800"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/user_email"
-        app:layout_constraintStart_toStartOf="@+id/user_email"
-        app:layout_constraintTop_toBottomOf="@+id/imageView1"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/account_number"
-        android:layout_width="146dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="11dp"
-        android:text="333179700049"
-        android:textColor="#FF9800"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/report_stack"
-        app:layout_constraintStart_toStartOf="@+id/user_email"
-        app:layout_constraintTop_toBottomOf="@+id/user_email"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/user_email"
-        android:layout_width="250dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="11dp"
-        android:text="cj_kim@mju.ac.kr"
-        android:textColor="#FF9800"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/account_number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_name"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/report_stack"
-        android:layout_width="66dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginBottom="49dp"
-        android:text="신고스택"
-        android:textColor="#FF9800"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogout"
-        app:layout_constraintEnd_toEndOf="@+id/account_number"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/account_number"
-        tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="179dp"
-        android:background="#FFC107"
-        android:backgroundTint="#FFC107"
-        android:text="로그아웃"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/delivery_detail2"
-        app:layout_constraintTop_toBottomOf="@+id/report_stack"
+        app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
