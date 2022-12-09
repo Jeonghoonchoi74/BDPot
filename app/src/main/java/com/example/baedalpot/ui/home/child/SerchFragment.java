@@ -25,6 +25,8 @@ import com.example.baedalpot.model.Chat;
 import com.example.baedalpot.model.Group;
 import com.example.baedalpot.model.User;
 import com.example.baedalpot.ui.auth.LoginActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,30 +35,29 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SerchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SerchFragment extends Fragment {
-
-
-
+public class SerchFragment extends Fragment implements ValueEventListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private TextView tv_title;
-    private TextView tv_member;
-    private TextView tv_restaurant;
-    private TextView tv_cash;
-    private TextView tv_timer;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private FragmentSerchBinding binding;
-    private RecyclerView recyclerView;
+
+    private final FirebaseAuth auth = FirebaseAuth.getInstance();
+    private final DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+
+
+
 
     private final ChatAdapter adapter = new ChatAdapter(new DiffUtil.ItemCallback<Chat>() {
         @Override
@@ -100,10 +101,27 @@ public class SerchFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        View v = new View(this.getContext());
-        recyclerView = v.findViewById(R.id.Chatrecycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false));
-        recyclerView.setAdapter(adapter);
+
+        db.child("UserAccount").child(auth.getUid()).child("group").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                String g = task.getResult().getValue().toString();
+                db.child("Group").child(g).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        Group gc = task.getResult().getValue(Group.class);
+                        binding.tvTitle.setText(gc.getTitle());
+                        binding.tvRestaurant.setText(gc.getRestaurant());
+                        Integer i = gc.getMaxPrice();
+                        binding.tvCash.setText("가용금액 : "+i.toString());
+                        Integer size = gc.getUserlist().size();
+                        Integer mx = gc.getMaxPerson();
+                        binding.tvMember.setText("참가인원 : "+size.toString()+" / "+mx.toString());
+                    }
+                });
+            }
+        });
+        //binding.ChatrecyclerView.setAdapter(this.adapter);
     }
 
     @Override
@@ -112,5 +130,22 @@ public class SerchFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentSerchBinding.inflate(inflater, container, false);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onDataChange(@NonNull DataSnapshot snapshot) {
+        ArrayList<Chat> chats = new ArrayList<>();
+
+        for (DataSnapshot child : snapshot.getChildren()) {
+            chats.add(child.getValue(Chat.class));
+        }
+
+        adapter.submitList(chats);
+    }
+
+
+    @Override
+    public void onCancelled(@NonNull DatabaseError error) {
+        error.toException().printStackTrace();
     }
 }

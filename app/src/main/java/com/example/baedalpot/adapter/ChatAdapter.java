@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.baedalpot.R;
+import com.example.baedalpot.databinding.FragmentSerchBinding;
+import com.example.baedalpot.databinding.ItemChatBinding;
 import com.example.baedalpot.databinding.ItemGroupBinding;
 import com.example.baedalpot.model.Chat;
 import com.example.baedalpot.model.Group;
@@ -30,10 +32,9 @@ public class ChatAdapter extends ListAdapter<Chat, ChatAdapter.ChatViewHolder> {
     @NonNull
     @Override
     public ChatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_chat, parent, false);
-
-        return new ChatViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        ItemChatBinding binding = ItemChatBinding.inflate(inflater, parent, false);
+        return new ChatViewHolder(binding);
     }
 
     @Override
@@ -44,15 +45,14 @@ public class ChatAdapter extends ListAdapter<Chat, ChatAdapter.ChatViewHolder> {
 
 
     public class ChatViewHolder extends RecyclerView.ViewHolder{
-        TextView tv_message;
-        public ChatViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            tv_message = itemView.findViewById(R.id.tv_message);
+        ItemChatBinding binding;
+        public ChatViewHolder(@NonNull ItemChatBinding binding) {
+            super(binding.tvMessage);
+            this.binding = binding;
         }
 
         private void bind(String strNum) {
-            tv_message.setText(strNum);
+            binding.tvMessage.setText(strNum);
         }
     }
 
