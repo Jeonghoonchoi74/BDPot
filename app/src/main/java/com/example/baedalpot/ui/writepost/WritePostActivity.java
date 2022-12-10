@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import com.example.baedalpot.BaseActivity;
 import com.example.baedalpot.R;
 import com.example.baedalpot.databinding.ActivityWritePostBinding;
+import com.example.baedalpot.model.Chat;
 import com.example.baedalpot.model.Group;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -122,6 +123,7 @@ public class WritePostActivity extends BaseActivity {
                             .setValue(group);
                     g_count += 1;
                     db.child("GroupCount").setValue(g_count);
+                    db.child("UserAccount").child(auth.getUid()).child("group").setValue("Group_"+count);
                     dismissProgressDialog();
                     showToastMessage("등록되었습니다.");
                 }

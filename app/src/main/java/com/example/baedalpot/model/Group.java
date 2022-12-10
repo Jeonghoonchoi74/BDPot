@@ -23,7 +23,6 @@ public class Group {
     public String key;
     public ArrayList<String> userlist;
 
-
     public String getTitle() {
         return title;
     }
