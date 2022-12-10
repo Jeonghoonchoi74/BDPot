@@ -168,6 +168,8 @@ public class SerchFragment extends Fragment implements ValueEventListener{
 
                                 }
                             });
+
+                            binding.etchat.setText("");
                         }
                     });
                 }
@@ -176,7 +178,6 @@ public class SerchFragment extends Fragment implements ValueEventListener{
         }catch(NullPointerException e) {
             Log.d("log", "null_button");
         }
-
 
     }
 

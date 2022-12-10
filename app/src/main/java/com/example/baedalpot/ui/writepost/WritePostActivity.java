@@ -3,6 +3,8 @@ package com.example.baedalpot.ui.writepost;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
@@ -24,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class WritePostActivity extends BaseActivity {
+public class WritePostActivity extends BaseActivity{
     private ActivityWritePostBinding binding;
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
     private final DatabaseReference db = FirebaseDatabase.getInstance().getReference();
@@ -41,8 +43,11 @@ public class WritePostActivity extends BaseActivity {
         binding.maxPriceTextField.getEditText().setTransformationMethod(null);
         binding.maxPersonTextField.getEditText().setTransformationMethod(null);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, R.layout.item_dropdown, getResources().getStringArray(R.array.Category));
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.Category, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.menuSpinner.setAdapter(adapter);
+
         //((AutoCompleteTextView) binding.categoryTextField.getEditText()).setAdapter(adapter);
 
         binding.submitButton.setOnClickListener(v -> submit());
@@ -53,7 +58,7 @@ public class WritePostActivity extends BaseActivity {
 
         String title = binding.titleTextField.getEditText().getText().toString().trim();
         String restaurant = binding.restaurantTextField.getEditText().getText().toString().trim();
-        String category = binding.categoryTextField.getEditText().getText().toString().trim();
+        String category = binding.menuSpinner.getSelectedItem().toString();
         String maxPrice = binding.maxPriceTextField.getEditText().getText().toString().trim();
         String maxPerson = binding.maxPersonTextField.getEditText().getText().toString().trim();
         String destination = binding.destinationTextField.getEditText().getText().toString().trim();
@@ -111,7 +116,7 @@ public class WritePostActivity extends BaseActivity {
                             auth.getUid(),
                             title,
                             restaurant,
-                            "미정",
+                            category,
                             Integer.parseInt(maxPrice),
                             Integer.parseInt(maxPerson),
                             destination,
@@ -133,4 +138,5 @@ public class WritePostActivity extends BaseActivity {
 
         finish();
     }
+
 }
