@@ -68,10 +68,10 @@ public class WritePostActivity extends BaseActivity {
             return;
         }
 
-        /*if (category.isEmpty()) {
+        if (category.isEmpty()) {
             showToastMessage("카테고리를 선택해 주세요.");
             return;
-        }*/
+        }
 
         if (maxPrice.isEmpty()) {
             showToastMessage("최대 금액을 입력해 주세요.");
