@@ -150,6 +150,7 @@ public class SerchFragment extends Fragment implements ValueEventListener{
                     }
                 });
                 startActivity(new Intent(requireContext(), NaviActivity.class));
+                
             }
         });
 
