@@ -17,6 +17,7 @@ import com.example.baedalpot.R;
 import com.example.baedalpot.model.User;
 import com.example.baedalpot.ui.auth.LoginActivity;
 import com.example.baedalpot.ui.home.NaviActivity;
+import com.example.baedalpot.ui.mypage.HistoryActivity;
 import com.example.baedalpot.ui.writepost.WritePostActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -129,6 +130,8 @@ public class MypageFragment extends Fragment implements View.OnClickListener {
 
         delUser = (Button) myView.findViewById(R.id.delUser);
         delUser.setOnClickListener(this);
+
+        myView.findViewById(R.id.delivery_detail2).setOnClickListener(this);
         return myView;
     }
 
@@ -142,6 +145,12 @@ public class MypageFragment extends Fragment implements View.OnClickListener {
             case R.id.delUser: //삭제구문 수정 필요
                 currentUser.delete(); //authentication 에서만 삭제, realtime database에서는 삭제 x
                 startActivity(new Intent(requireContext(), LoginActivity.class));
+                break;
+
+            case R.id.delivery_detail2:
+                Intent intent = new Intent(requireContext(), HistoryActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
                 break;
         }
 

@@ -92,6 +92,7 @@ public class SerchFragment extends Fragment implements ValueEventListener{
                         Integer size = gc.getUserlist().size();
                         Integer mx = gc.getMaxPerson();
                         binding.tvMember.setText("참가인원 : "+size.toString()+" / "+mx.toString());
+                        binding.tvNumAgree.setText("동의인원: " + (gc.getNumAgree()));
                     }
                 });
             }
@@ -118,7 +119,6 @@ public class SerchFragment extends Fragment implements ValueEventListener{
                         });
                     }
                 });
-
                 db.child("UserAccount").child(auth.getUid()).child("group").setValue(null);
             }
         });
@@ -178,6 +178,47 @@ public class SerchFragment extends Fragment implements ValueEventListener{
         }catch(NullPointerException e) {
             Log.d("log", "null_button");
         }
+
+        binding.radioButtonYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                db.child("UserAccount").child(auth.getUid()).child("group").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        String g = task.getResult().getValue().toString();
+                        db.child("Group").child(g).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                Group gc = task.getResult().getValue(Group.class);
+                                db.child("Group").child(g).child("numAgree").setValue((gc.getNumAgree()+1));
+                                binding.tvNumAgree.setText("동의인원: " + (gc.getNumAgree()+1));
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        binding.radioButtonNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                db.child("UserAccount").child(auth.getUid()).child("group").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        String g = task.getResult().getValue().toString();
+                        db.child("Group").child(g).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                Group gc = task.getResult().getValue(Group.class);
+                                db.child("Group").child(g).child("numAgree").setValue((gc.getNumAgree()-1));
+                                binding.tvNumAgree.setText("동의인원: " + (gc.getNumAgree()-1));
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
 
     }
 
