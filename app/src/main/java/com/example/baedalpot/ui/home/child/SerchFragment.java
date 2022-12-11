@@ -1,6 +1,7 @@
 package com.example.baedalpot.ui.home.child;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +14,15 @@ import androidx.recyclerview.widget.DiffUtil;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.example.baedalpot.adapter.ChatAdapter;
 import com.example.baedalpot.databinding.FragmentSerchBinding;
 import com.example.baedalpot.model.Chat;
 import com.example.baedalpot.model.Group;
 import com.example.baedalpot.model.User;
+import com.example.baedalpot.ui.auth.LoginActivity;
+import com.example.baedalpot.ui.home.NaviActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,6 +44,8 @@ public class SerchFragment extends Fragment implements ValueEventListener{
     private String mParam1;
     private String mParam2;
     private FragmentSerchBinding binding;
+    public String groupName;
+    public int numSize;
 
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
     private final DatabaseReference db = FirebaseDatabase.getInstance().getReference();
@@ -76,6 +83,8 @@ public class SerchFragment extends Fragment implements ValueEventListener{
         super.onViewCreated(view, savedInstanceState);
 
 
+
+
         //information
         db.child("UserAccount").child(auth.getUid()).child("group").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -90,8 +99,11 @@ public class SerchFragment extends Fragment implements ValueEventListener{
                         Integer i = gc.getMaxPrice();
                         binding.tvCash.setText("가용금액 : "+i.toString());
                         Integer size = gc.getUserlist().size();
+                        numSize = size;
+                        Log.e("사이즈", String.valueOf(size));
                         Integer mx = gc.getMaxPerson();
                         binding.tvMember.setText("참가인원 : "+size.toString()+" / "+mx.toString());
+                        binding.tvNumAgree.setText("동의인원: " + (gc.getNumAgree()));
                     }
                 });
             }
@@ -102,8 +114,10 @@ public class SerchFragment extends Fragment implements ValueEventListener{
 
         //exit
         binding.btnExit.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
+                Log.e("사람 수", String.valueOf(numSize));
                 db.child("UserAccount").child(auth.getUid()).child("group").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -111,15 +125,31 @@ public class SerchFragment extends Fragment implements ValueEventListener{
                         db.child("Group").child(s).child("userlist").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                int number;
                                 ArrayList<Object> array = (ArrayList) task.getResult().getValue();
                                 array.remove(auth.getUid());
                                 db.child("Group").child(s).child("userlist").setValue(array);
+                                number = array.size();
+                                db.child("UserAccount").child(auth.getUid()).child("group").setValue(null);
+
+                                if(number == 0){
+                                    db.child("Group").child(s).removeValue();
+                                    db.child("GroupCount").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                            long numGroup = (long)task.getResult().getValue();
+                                            numGroup--;
+                                            db.child("GroupCount").setValue(numGroup);
+                                        }
+                                    });
+                                }
                             }
                         });
+
+
                     }
                 });
-
-                db.child("UserAccount").child(auth.getUid()).child("group").setValue(null);
+                startActivity(new Intent(requireContext(), NaviActivity.class));
             }
         });
 
@@ -168,7 +198,6 @@ public class SerchFragment extends Fragment implements ValueEventListener{
 
                                 }
                             });
-
                             binding.etchat.setText("");
                         }
                     });
@@ -179,6 +208,45 @@ public class SerchFragment extends Fragment implements ValueEventListener{
             Log.d("log", "null_button");
         }
 
+        binding.radioButtonYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                db.child("UserAccount").child(auth.getUid()).child("group").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        String g = task.getResult().getValue().toString();
+                        db.child("Group").child(g).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                Group gc = task.getResult().getValue(Group.class);
+                                db.child("Group").child(g).child("numAgree").setValue((gc.getNumAgree()+1));
+
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        binding.radioButtonNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                db.child("UserAccount").child(auth.getUid()).child("group").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        String g = task.getResult().getValue().toString();
+                        db.child("Group").child(g).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                Group gc = task.getResult().getValue(Group.class);
+                                db.child("Group").child(g).child("numAgree").setValue((gc.getNumAgree()-1));
+                                binding.tvNumAgree.setText("동의인원: " + (gc.getNumAgree()-1));
+                            }
+                        });
+                    }
+                });
+            }
+        });
     }
 
     @Override

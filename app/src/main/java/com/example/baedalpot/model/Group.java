@@ -22,6 +22,7 @@ public class Group {
     public long timestampComplement;
     public String key;
     public ArrayList<String> userlist;
+    public int numAgree;
 
     public String getTitle() {
         return title;
@@ -90,6 +91,14 @@ public class Group {
         this.userlist = userlist;
     }
 
+    public int getNumAgree() {
+        return numAgree;
+    }
+
+    public void setNumAgree(int numAgree) {
+        this.numAgree = numAgree;
+    }
+
     public Group(String writer, String title, String restaurant, String category, int maxPrice, int maxPerson, String destination, String key, ArrayList<String> userlist) {
         this.writer = writer;
         this.title = title;
@@ -102,5 +111,6 @@ public class Group {
         this.timestampComplement = timestamp * -1;
         this.userlist = userlist;
         this.key = key;
+        this.numAgree = 0;
     }
 }
