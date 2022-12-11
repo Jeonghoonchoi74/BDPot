@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DiffUtil;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.baedalpot.adapter.ChatAdapter;
@@ -44,14 +45,8 @@ public class SerchFragment extends Fragment implements ValueEventListener{
     private String mParam1;
     private String mParam2;
     private FragmentSerchBinding binding;
-    public String groupName;
-    public int numSize;
-
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
     private final DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-
-
-
 
     private final ChatAdapter adapter = new ChatAdapter(new DiffUtil.ItemCallback<Chat>() {
         @Override
@@ -99,8 +94,6 @@ public class SerchFragment extends Fragment implements ValueEventListener{
                         Integer i = gc.getMaxPrice();
                         binding.tvCash.setText("가용금액 : "+i.toString());
                         Integer size = gc.getUserlist().size();
-                        numSize = size;
-                        Log.e("사이즈", String.valueOf(size));
                         Integer mx = gc.getMaxPerson();
                         binding.tvMember.setText("참가인원 : "+size.toString()+" / "+mx.toString());
                         binding.tvNumAgree.setText("동의인원: " + (gc.getNumAgree()));
@@ -117,7 +110,6 @@ public class SerchFragment extends Fragment implements ValueEventListener{
 
             @Override
             public void onClick(View view) {
-                Log.e("사람 수", String.valueOf(numSize));
                 db.child("UserAccount").child(auth.getUid()).child("group").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -150,7 +142,7 @@ public class SerchFragment extends Fragment implements ValueEventListener{
                     }
                 });
                 startActivity(new Intent(requireContext(), NaviActivity.class));
-                
+
             }
         });
 
@@ -189,14 +181,11 @@ public class SerchFragment extends Fragment implements ValueEventListener{
                                         for(DataSnapshot s : snapshot.getChildren()){
                                             chats.add(s.getValue(Chat.class));
                                         }
-
                                         adapter.submitList(chats);
                                     }
                                 }
-
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
-
                                 }
                             });
                             binding.etchat.setText("");
@@ -204,10 +193,27 @@ public class SerchFragment extends Fragment implements ValueEventListener{
                     });
                 }
             });
-
         }catch(NullPointerException e) {
             Log.d("log", "null_button");
         }
+
+        binding.btnBaedal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.btnBaedal.setVisibility(View.INVISIBLE);
+                binding.btnReceive.setVisibility(View.VISIBLE);
+            }
+        });
+
+        binding.btnReceive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //여기서 해당 유저는 그룹에서 삭제 필요?
+                //하겠지 근데 그러면 history 쓸 수 있나?
+                //일단 기다리자
+                startActivity(new Intent(requireContext(), NaviActivity.class));
+            }
+        });
 
         binding.radioButtonYes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,7 +227,12 @@ public class SerchFragment extends Fragment implements ValueEventListener{
                             public void onComplete(@NonNull Task<DataSnapshot> task) {
                                 Group gc = task.getResult().getValue(Group.class);
                                 db.child("Group").child(g).child("numAgree").setValue((gc.getNumAgree()+1));
-
+                                binding.tvNumAgree.setText("동의인원: " + (gc.getNumAgree()+1));
+                                if((gc.getNumAgree()+1) == gc.getUserlist().size()){ //사이즈 구문 비교 필요
+                                    binding.btnBaedal.setVisibility(View.VISIBLE);
+                               }else{
+                                    binding.btnBaedal.setVisibility(View.INVISIBLE);
+                                }
                             }
                         });
                     }
@@ -236,6 +247,7 @@ public class SerchFragment extends Fragment implements ValueEventListener{
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         String g = task.getResult().getValue().toString();
+                        //조건문 추가 0 이하인지
                         db.child("Group").child(g).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DataSnapshot> task) {

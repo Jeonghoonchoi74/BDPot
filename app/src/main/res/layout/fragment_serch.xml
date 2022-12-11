@@ -88,7 +88,8 @@
             android:text="배달시작"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"/>
+            android:layout_marginStart="10dp"
+            android:visibility="invisible" />
 
 
     </LinearLayout>
@@ -152,17 +153,13 @@
             </RadioGroup>
 
 
+            <Button
+                android:id="@+id/btn_receive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:text="배달 확인"/>
 
-            <Button
-                android:id="@+id/btn_menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="메뉴 입력"/>
-            <Button
-                android:id="@+id/btn_menulist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="메뉴 확인"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -194,5 +191,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="?attr/colorPrimary" />
+
 
 </LinearLayout>
