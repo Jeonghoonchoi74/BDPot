@@ -38,7 +38,7 @@ public class RegisterActivity extends BaseActivity {
         String id = binding.idTextField.getEditText().getText().toString().trim();
         String email = binding.emailTextField.getEditText().getText().toString().trim();
         String password = binding.passwordTextField.getEditText().getText().toString().trim();
-        //String match = "@ruu.kr"; 임시 로그인 도메인 ruu.kr로 임시 이메일 생성 가능
+        String match = "@mju.ac.kr";
         if (accNum.isEmpty()) {
             Toast.makeText(this, "계좌번호를 입력해 주세요.", Toast.LENGTH_LONG).show();
             return;
@@ -70,7 +70,7 @@ public class RegisterActivity extends BaseActivity {
         }
 
 
-       // if(email.contains(match)){
+       if(email.contains(match)){
             showProgressDialog("회원가입 중 ... 잠시만 기다려 주세요.");
             auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(RegisterActivity.this, task -> {
@@ -99,9 +99,9 @@ public class RegisterActivity extends BaseActivity {
                         startActivity(new Intent(this, LoginActivity.class));
                         finishAffinity();
                     });
-      /*  }else{
+        }else{
             Toast.makeText(this, "이메일을 주소를 @mju.ac.kr로 끝나야 됩니다.", Toast.LENGTH_LONG).show();
-        }*/
+        }
 
     }
 }
